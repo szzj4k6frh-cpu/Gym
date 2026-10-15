@@ -51,7 +51,7 @@ Browserprüfungen ersetzen diesen echten Safari-/iPhone-Test nicht.
 
 Die Schaltfläche links hakt eine ganze Übung ab. Tippen auf den Namen öffnet die einzelnen Sätze. Bei 2–3 Sätzen startet die Ansicht mit zwei und bietet einen optionalen dritten Satz an. Kurzhantelgewichte werden je Hantel eingetragen. Zeitübungen haben Sekunden- statt Wiederholungsfelder; Antritte ein Meterfeld. Ausführungshinweise sind unter der jeweiligen Übung aufklappbar.
 
-„Pause“ öffnet einen 2-/3-Minuten-Timer. Mit „Nach Satz starten“ startet er nach dem Abhaken eines einzelnen Satzes automatisch; zuletzt gewählte Dauer wird für die laufende Sitzung verwendet. Bei gesperrtem Bildschirm oder angehaltener Web-App ist kein zuverlässiger Alarm möglich. Nach dem Öffnen berechnet der Timer die Restzeit neu. Der Timer läuft für die aktuelle App-Sitzung und wird durch Neuladen beendet.
+Nach dem Abhaken eines einzelnen Satzes startet automatisch eine Pause. Mit „2 Min.“ oder „3 Min.“ wählt man die Dauer für den nächsten Satz; eine laufende Pause wird dadurch nicht neu gestartet. „Stop“ beendet sie. Dauer und Endzeit werden lokal gespeichert und nach einem Neuladen wiederhergestellt. Bei gesperrtem Bildschirm oder angehaltener Web-App ist kein zuverlässiger Alarm möglich. Nach dem Öffnen berechnet der Timer die Restzeit neu.
 
 ## Daten und Updates
 

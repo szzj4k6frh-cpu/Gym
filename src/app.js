@@ -8,8 +8,7 @@ const $=id=>document.getElementById(id);
 const store=createStore({getItem:key=>window.localStorage.getItem(key),setItem:(key,value)=>window.localStorage.setItem(key,value)});
 let selected=dateKey(new Date()),lastToday=selected;
 const expanded=new Set();
-const timer=createTimer();
-let autoTimer=false,restSeconds=120;
+const timer=createTimer(()=>Date.now(),{getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value)});
 const longDate=new Intl.DateTimeFormat('de-DE',{day:'numeric',month:'long'});
 const shortDate=new Intl.DateTimeFormat('de-DE',{day:'numeric',month:'short'});
 const dayName=new Intl.DateTimeFormat('de-DE',{weekday:'long'});
@@ -36,7 +35,7 @@ function render() {
  $('warning').textContent=store.getWarning()??'';$('warning').hidden=!store.getWarning();
  $('content').replaceChildren(...groups.map(g=>{
   const section=node('section','group'),head=node('div','section-head');head.append(node('h3','',g.title),node('p','',g.note));section.append(head);
-  for(const exercise of g.exercises)section.append(exerciseView({exercise,date:selected,store,expanded,onChange:refresh,onSetDone:()=>{if(autoTimer)startTimer(restSeconds)}}));
+  for(const exercise of g.exercises)section.append(exerciseView({exercise,date:selected,store,expanded,onChange:refresh,onSetDone:()=>startTimer()}));
   return section;
  }));
  if(!exercises.length){const rest=node('section','rest');rest.append(node('p','rest-icon','↟'),node('h3','','Regeneration / Fußball'));$('content').append(rest);}
@@ -52,13 +51,11 @@ function updateTimer() {
  const remaining=timer.remaining();
  $('timer-output').textContent=remaining===null?'—':remaining===0?'Pause beendet':`${Math.floor(remaining/60)}:${String(remaining%60).padStart(2,'0')}`;
  $('timer-stop').hidden=remaining===null;
+ for(const seconds of [120,180])$(`timer-${seconds}`).setAttribute('aria-pressed',String(timer.getDuration()===seconds));
 }
-function startTimer(seconds) {restSeconds=seconds;timer.start(seconds);updateTimer();}
-$('timer-toggle').onclick=()=>{const panel=$('timer-controls');panel.hidden=!panel.hidden;$('timer-toggle').setAttribute('aria-expanded',String(!panel.hidden));};
-$('timer-120').onclick=()=>startTimer(120);
-$('timer-180').onclick=()=>startTimer(180);
+function startTimer() {timer.start();updateTimer();}
+for(const seconds of [120,180])$(`timer-${seconds}`).onclick=()=>{timer.setDuration(seconds);updateTimer()};
 $('timer-stop').onclick=()=>{timer.stop();updateTimer()};
-$('timer-auto').onchange=event=>{autoTimer=event.target.checked};
 setInterval(updateTimer,250);
 updateTimer();
 

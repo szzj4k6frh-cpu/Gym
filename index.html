@@ -12,7 +12,7 @@
 <div class="day-heading sr-only"><div><p id="date-label" class="eyebrow"></p><h2 id="selected-date"></h2></div><span id="counter" aria-live="polite"></span></div>
 <div id="progress-wrap" class="sr-only"><progress id="progress" max="1" value="0" aria-label="Tagesfortschritt"></progress></div>
 <div id="variants" class="variants" role="group" aria-label="Trainingsort"><button id="home" aria-pressed="true">Zuhause</button><button id="away" aria-pressed="false">Unterwegs</button></div>
-<div class="timer-tools"><button id="timer-toggle" aria-label="Pausentimer" aria-expanded="false" aria-controls="timer-controls">Pause</button><span id="timer-output" role="timer" aria-live="off">—</span><button id="timer-stop" hidden aria-label="Timer stoppen">Stop</button><div id="timer-controls" hidden><button id="timer-120">2 Min.</button><button id="timer-180">3 Min.</button><label><input type="checkbox" id="timer-auto"> Nach Satz starten</label><p>Bei gesperrtem Bildschirm gibt es keinen verlässlichen Alarm. Beim Öffnen wird die verbleibende Zeit aktualisiert.</p></div></div>
+<div class="timer-tools" role="group" aria-label="Automatische Satzpause"><span class="timer-label">Satzpause</span><button id="timer-120" aria-pressed="true">2 Min.</button><button id="timer-180" aria-pressed="false">3 Min.</button><span id="timer-output" role="timer" aria-live="off">—</span><button id="timer-stop" hidden aria-label="Timer stoppen">Stop</button></div>
 <p id="warning" class="warning" role="alert" hidden></p>
 <div id="content"></div>
 <button id="reset" class="reset">Tag zurücksetzen</button>

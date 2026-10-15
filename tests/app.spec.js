@@ -71,7 +71,7 @@ test('expanded exercise tracks individual sets, optional third and previous resu
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
 test('rest timer catches up after time elapsed',async({page})=>{
- await page.goto('/');await page.getByRole('button',{name:'Pausentimer'}).click();await page.clock.setFixedTime(new Date('2026-10-12T12:00:00+02:00'));await page.getByRole('button',{name:'2 Min.',exact:true}).click();await expect(page.locator('#timer-output')).toHaveText('2:00');
+ await page.goto('/');await page.clock.setFixedTime(new Date('2026-10-12T12:00:00+02:00'));await page.getByText('Kurzhantel-Schulterdrücken',{exact:true}).click();await page.getByRole('button',{name:'Satz 1 abschließen',exact:true}).click();await expect(page.locator('#timer-output')).toHaveText('2:00');
  await page.clock.setFixedTime(new Date('2026-10-12T12:01:15+02:00'));await page.evaluate(()=>document.dispatchEvent(new Event('visibilitychange')));await expect(page.locator('#timer-output')).toHaveText('0:45');
  await page.getByRole('button',{name:'Timer stoppen'}).click();await expect(page.locator('#timer-output')).toHaveText('—');
 });
@@ -92,4 +92,12 @@ test('numeric editing has no grouping and iPhone-sized input text',async({page})
 });
 test('invalid numeric entry is not silently discarded by completing a set',async({page})=>{
  await page.goto('/');await page.getByText('Kurzhantel-Schulterdrücken',{exact:true}).click();const field=page.getByLabel('Gewicht Satz 1').first();await field.fill('abc');await page.getByRole('button',{name:'Satz 1 abschließen',exact:true}).click();await expect(field).toHaveValue('abc');await expect(field).toHaveAttribute('aria-invalid','true');await expect(page.getByRole('button',{name:'Satz 1 abschließen',exact:true})).toHaveAttribute('aria-pressed','false');
+});
+test('pause starts automatically after checking a set and survives reload',async({page})=>{
+ await page.goto('/');await page.clock.setFixedTime(new Date('2026-10-12T12:00:00+02:00'));await page.getByText('Kurzhantel-Schulterdrücken',{exact:true}).click();
+ await page.getByRole('button',{name:'Satz 1 abschließen',exact:true}).click();await expect(page.locator('#timer-output')).toHaveText('2:00');
+ await page.clock.setFixedTime(new Date('2026-10-12T12:00:30+02:00'));await page.reload();await expect(page.locator('#timer-output')).toHaveText('1:30');
+ await page.getByRole('button',{name:'3 Min.',exact:true}).click();await expect(page.locator('#timer-output')).toHaveText('1:30');
+ await page.getByText('Kurzhantel-Schulterdrücken',{exact:true}).click();await page.getByRole('button',{name:'Satz 1 abschließen',exact:true}).click();await expect(page.locator('#timer-output')).toHaveText('1:30');
+ await page.getByRole('button',{name:'Satz 2 abschließen',exact:true}).click();await expect(page.locator('#timer-output')).toHaveText('3:00');
 });
