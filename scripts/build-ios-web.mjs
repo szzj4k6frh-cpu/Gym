@@ -1,0 +1,13 @@
+import {build} from 'esbuild';
+import {mkdir,readFile,writeFile,cp} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
+const root=fileURLToPath(new URL('../',import.meta.url));
+const output=path.join(root,'ios/Gym/Web');
+await mkdir(output,{recursive:true});
+await build({entryPoints:[path.join(root,'src/app.js')],bundle:true,minifySyntax:true,define:{'globalThis.GYM_NATIVE_BUILD':'true','import.meta.url':'location.href'},format:'iife',target:'safari18',outfile:path.join(output,'app.js'),charset:'utf8',legalComments:'none'});
+const html=(await readFile(path.join(root,'index.html'),'utf8')).replace('<script type="module" src="./src/app.js"></script>','<script defer src="./app.js"></script>');
+await writeFile(path.join(output,'index.html'),html);
+for(const file of ['styles.css','manifest.webmanifest'])await cp(path.join(root,file),path.join(output,file));
+await cp(path.join(root,'icons'),path.join(output,'icons'),{recursive:true});
+console.log('Local iPhone web bundle written to ios/Gym/Web.');

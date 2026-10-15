@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101813"><meta name="description" content="Dein Trainingsplan. Zuhause und unterwegs. Auch offline.">
+<link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./icons/apple-touch-icon.png"><link rel="icon" href="./icons/icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes">
+<title>Gym</title><link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<main>
+<section class="calendar" aria-label="Trainingswoche"><div class="week-nav"><button id="previous" aria-label="Vorherige Woche">←</button><span id="week-label"></span><button id="next" aria-label="Nächste Woche">→</button><button id="today">Heute</button></div><div id="days" class="days"></div></section>
+<div class="day-heading sr-only"><div><p id="date-label" class="eyebrow"></p><h2 id="selected-date"></h2></div><span id="counter" aria-live="polite"></span></div>
+<div id="progress-wrap" class="sr-only"><progress id="progress" max="1" value="0" aria-label="Tagesfortschritt"></progress></div>
+<div id="variants" class="variants" role="group" aria-label="Trainingsort"><button id="home" aria-pressed="true">Zuhause</button><button id="away" aria-pressed="false">Unterwegs</button></div>
+<div class="timer-tools" role="group" aria-label="Automatische Satzpause"><span class="timer-label">Satzpause</span><button id="timer-120" aria-pressed="true">2 Min.</button><button id="timer-180" aria-pressed="false">3 Min.</button><span id="timer-output" role="timer" aria-live="off">—</span><button id="timer-stop" hidden aria-label="Timer stoppen">Stop</button></div>
+<p id="warning" class="warning" role="alert" hidden></p>
+<div id="content"></div>
+<button id="reset" class="reset">Tag zurücksetzen</button>
+</main>
+<script defer src="./app.js"></script>
+</body></html>

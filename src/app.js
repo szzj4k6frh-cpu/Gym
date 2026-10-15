@@ -1,3 +1,4 @@
+import {notifyRestStarted,notifyRestStopped} from './native-bridge.js';
 import {getGroups} from './plan.js';
 import {exerciseView} from './exercise-view.js';
 import {createTimer} from './timer.js';
@@ -53,13 +54,13 @@ function updateTimer() {
  $('timer-stop').hidden=remaining===null;
  for(const seconds of [120,180])$(`timer-${seconds}`).setAttribute('aria-pressed',String(timer.getDuration()===seconds));
 }
-function startTimer() {timer.start();updateTimer();}
+function startTimer() {timer.start();notifyRestStarted(timer.getDeadline(),timer.getDuration());updateTimer();}
 for(const seconds of [120,180])$(`timer-${seconds}`).onclick=()=>{timer.setDuration(seconds);updateTimer()};
-$('timer-stop').onclick=()=>{timer.stop();updateTimer()};
+$('timer-stop').onclick=()=>{timer.stop();notifyRestStopped();updateTimer()};
 setInterval(updateTimer,250);
 updateTimer();
 
 render();
-if('serviceWorker' in navigator) {
+if(!globalThis.GYM_NATIVE_BUILD&&/^https?:$/.test(location.protocol)&&'serviceWorker' in navigator) {
  navigator.serviceWorker.register(new URL('../sw.js',import.meta.url)).catch(()=>{});
 }

@@ -9,6 +9,7 @@ export function createTimer(now=()=>Date.now(),storage=null) {
  function save(){try{storage?.setItem(KEY,JSON.stringify({version:1,deadline,duration}))}catch{/* Continue with this session's timer. */}}
  return {
   getDuration:()=>duration,
+  getDeadline:()=>deadline,
   setDuration(seconds){if(!validDuration(seconds))throw RangeError('Pausendauer');duration=seconds;save();},
   start(seconds=duration){if(!validDuration(seconds))throw RangeError('Pausendauer');duration=seconds;deadline=now()+seconds*1000;save();},
   stop(){deadline=null;save();},
