@@ -33,7 +33,7 @@ function render() {
    b.append(tick,info);b.onclick=()=>{store.toggle(selected,e.id);render()};section.append(b);
   }return section;
  }));
- if(!exercises.length){const rest=node('section','rest');rest.append(node('p','rest-icon','↟'),node('h3','','Regeneration / Fußball'),node('p','','Heute ist Platz zum Durchatmen. Dein nächstes Training wartet schon.'));$('content').append(rest);}
+ if(!exercises.length){const rest=node('section','rest');rest.append(node('p','rest-icon','↟'),node('h3','','Regeneration / Fußball'));$('content').append(rest);}
  $('reset').hidden=!exercises.length;
  if(focus)document.getElementById(focus)?.focus({preventScroll:true});
 }
