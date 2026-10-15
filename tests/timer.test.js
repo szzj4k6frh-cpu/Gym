@@ -1,0 +1,2 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {createTimer} from '../src/timer.js';
+test('rest timer uses elapsed wall time and can be stopped',()=>{let now=1000;const t=createTimer(()=>now);t.start(120);assert.equal(t.remaining(),120);now+=45000;assert.equal(t.remaining(),75);now+=90000;assert.equal(t.remaining(),0);t.stop();assert.equal(t.remaining(),null);assert.throws(()=>t.start(-1));});

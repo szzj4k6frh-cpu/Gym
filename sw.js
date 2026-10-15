@@ -1,5 +1,5 @@
-const CACHE='gym-app-v4';
-const FILES=['./','./index.html','./styles.css','./src/app.js','./src/plan.js','./src/dates.js','./src/storage.js','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png'];
+const CACHE='gym-app-v5';
+const FILES=['./','./index.html','./styles.css','./src/app.js','./src/timer.js','./src/exercise-view.js','./src/plan.js','./src/dates.js','./src/storage.js','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png'];
 const urls=FILES.map(path=>new URL(path,self.registration.scope).href);
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(urls)))});
 self.addEventListener('activate',event=>{event.waitUntil((async()=>{

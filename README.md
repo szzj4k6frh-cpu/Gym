@@ -1,6 +1,6 @@
 # Gym · Dein Training
 
-Kostenlose, deutschsprachige Trainings-Web-App für das iPhone. Ohne Konto, Cloud oder externe Laufzeitdienste. Zuhause- und Calisthenics-Plan, Wochenübersicht und Häkchen pro Datum; offline nutzbar nach vollständigem ersten Laden.
+Kostenlose, deutschsprachige Trainings-Web-App für das iPhone. Ohne Konto, Cloud oder externe Laufzeitdienste. Zuhause- und Calisthenics-Plan, Wochenübersicht und Häkchen pro Datum; offline nutzbar nach vollständigem ersten Laden. Übungen lassen sich für einzelne Sätze, Gewichte, Wiederholungen und Ausführungshinweise aufklappen. Frühere protokollierte Werte derselben Übung erscheinen direkt darunter.
 
 ## Lokal starten
 
@@ -47,9 +47,15 @@ Auf dem iPhone 16:
 
 Browserprüfungen ersetzen diesen echten Safari-/iPhone-Test nicht.
 
+## Satzprotokoll und Pausen
+
+Die Schaltfläche links hakt eine ganze Übung ab. Tippen auf den Namen öffnet die einzelnen Sätze. Bei 2–3 Sätzen startet die Ansicht mit zwei und bietet einen optionalen dritten Satz an. Kurzhantelgewichte werden je Hantel eingetragen. Zeitübungen haben Sekunden- statt Wiederholungsfelder; Antritte ein Meterfeld. Ausführungshinweise sind unter der jeweiligen Übung aufklappbar.
+
+„Pause“ öffnet einen 2-/3-Minuten-Timer. Mit „Nach Satz starten“ startet er nach dem Abhaken eines einzelnen Satzes automatisch; zuletzt gewählte Dauer wird für die laufende Sitzung verwendet. Bei gesperrtem Bildschirm oder angehaltener Web-App ist kein zuverlässiger Alarm möglich. Nach dem Öffnen berechnet der Timer die Restzeit neu. Der Timer läuft für die aktuelle App-Sitzung und wird durch Neuladen beendet.
+
 ## Daten und Updates
 
-Häkchen und Variante werden lokal pro Datum gespeichert. Neue Wochen starten leer, vergangene Trainings bleiben über die Wochenpfeile erreichbar. Der Tagesreset löscht nach Bestätigung alle Häkchen dieses Datums, auch die andere Variante.
+Häkchen, Satzwerte und Variante werden lokal pro Datum gespeichert. Vorhandene Häkchen der ersten App-Version werden in das neue Speicherformat übernommen; der ursprüngliche Datensatz wird dabei nicht überschrieben. Neue Wochen starten leer, vergangene Trainings bleiben über die Wochenpfeile erreichbar. Der Tagesreset löscht nach Bestätigung alle Häkchen und Satzwerte dieses Datums, auch die andere Variante.
 
 Keine Synchronisierung und kein Backup. Beim Löschen der Website-Daten können Einträge verloren gehen. Safari und die installierte App können getrennte Speicher haben. Speicherfehler werden angezeigt; die App bleibt mit Häkchen für die aktuelle Sitzung bedienbar. Beschädigte Daten werden nicht still überschrieben.
 

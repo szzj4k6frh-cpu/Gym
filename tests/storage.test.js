@@ -1,11 +1,11 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';
 import {createStore} from '../src/storage.js';
-const memory=(initial=null)=>({value:initial,getItem(){return this.value},setItem(k,v){this.value=v}});
+const memory=(initial=null)=>({value:initial,newValue:null,getItem(k){return k==='gym-training:v1'?this.value:this.newValue},setItem(k,v){if(k==='gym-training:v2')this.newValue=v;else this.value=v}});
 const day='2026-10-12';
 test('variants, shared extras, reload and date-limited reset',()=>{
  const m=memory(),s=createStore(m);s.toggle(day,'home:press');s.toggle(day,'foot:short-foot');s.setVariant(day,'away');s.toggle(day,'away:pike');s.toggle('2026-10-13','foot:short-foot');
  const reloaded=createStore(m);assert.equal(reloaded.getDay(day).variant,'away');assert.equal(Object.keys(reloaded.getDay(day).done).length,3);
- assert.deepEqual(reloaded.resetDay(day),{variant:'away',done:{}});assert.equal(reloaded.getDay('2026-10-13').done['foot:short-foot'],true);
+ assert.deepEqual(reloaded.resetDay(day),{variant:'away',done:{},logs:{}});assert.equal(reloaded.getDay('2026-10-13').done['foot:short-foot'],true);
 });
 test('toggle twice removes a check and snapshots cannot mutate store',()=>{const s=createStore(memory());s.toggle(day,'home:press');s.toggle(day,'home:press');assert.deepEqual(s.getDay(day).done,{});s.getDay(day).done.x=true;assert.deepEqual(s.getDay(day).done,{});});
 for(const payload of ['{','null','{"version":2,"days":{}}','{"version":1,"days":{"2026-02-30":{"variant":"home","done":{}}}}','{"version":1,"days":{"2026-10-12":{"variant":"bad","done":{}}}}','{"version":1,"days":{"__proto__":{}}}','{"version":1,"days":{"2026-10-12":{"variant":"home","done":{"home:press":"yes"}}}}']) {
