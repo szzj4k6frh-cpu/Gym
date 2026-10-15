@@ -2,6 +2,7 @@
 from pathlib import Path
 from uuid import uuid5, NAMESPACE_URL
 import json
+import re
 
 ROOT = Path(__file__).resolve().parents[1]
 objects = {}
@@ -65,13 +66,17 @@ dependency = obj('dependency:ext','PBXTargetDependency',target=ext_target,target
 app_target = obj('target:app','PBXNativeTarget',name='Gym',productName='Gym',productType='com.apple.product-type.application',productReference=app_product,buildConfigurationList=app_config,buildPhases=[app_sources,app_frameworks,app_resources,embed],buildRules=[],dependencies=[dependency])
 project = obj('project','PBXProject',attributes={'BuildIndependentTargetsInParallel':'YES','LastUpgradeCheck':'1600','TargetAttributes':{app_target:{'CreatedOnToolsVersion':'16.0','ProvisioningStyle':'Automatic'},ext_target:{'CreatedOnToolsVersion':'16.0','ProvisioningStyle':'Automatic'}}},buildConfigurationList=project_config,compatibilityVersion='Xcode 14.0',developmentRegion='de',hasScannedForEncodings=0,knownRegions=['de','en','Base'],mainGroup=main_group,productRefGroup=products,projectDirPath='',projectRoot='',targets=[app_target,ext_target])
 
+def atom(value):
+    text = str(value)
+    return text if re.fullmatch(r'[A-Za-z0-9_.]+', text) else json.dumps(text)
+
 def serialize(value, depth=0):
     indent='\t'*depth
     if isinstance(value,dict):
-        return '{\n'+''.join('\t'*(depth+1)+json.dumps(str(k))+' = '+serialize(v,depth+1)+';\n' for k,v in value.items())+indent+'}'
+        return '{\n'+''.join('\t'*(depth+1)+atom(k)+' = '+serialize(v,depth+1)+';\n' for k,v in value.items())+indent+'}'
     if isinstance(value,list):
         return '(\n'+''.join('\t'*(depth+1)+serialize(v,depth+1)+',\n' for v in value)+indent+')'
-    return str(value) if isinstance(value,int) else json.dumps(value)
+    return str(value) if isinstance(value,int) else atom(value)
 
 folder=ROOT/'ios/Gym.xcodeproj'
 folder.mkdir(exist_ok=True)

@@ -7,7 +7,8 @@
     "test": "node --test tests/*.test.js",
     "test:e2e": "playwright test",
     "start": "python3 -m http.server 4173 --bind 0.0.0.0",
-    "build:ios": "node scripts/build-ios-web.mjs"
+    "build:ios": "node scripts/build-ios-web.mjs",
+    "package:ios": "node scripts/package-ios.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",

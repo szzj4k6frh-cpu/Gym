@@ -16,3 +16,9 @@ test('Xcode package includes embedded activity and local web resources',()=>{
  assert.ok(readFileSync('ios/Gym/Info.plist','utf8').includes('NSSupportsLiveActivities'));
  assert.ok(readFileSync('ios/GymActivity/Info.plist','utf8').includes('com.apple.widgetkit-extension'));
 });
+test('download archive is self-contained and contains no development data',async()=>{
+ const {execFileSync}=await import('node:child_process');
+ const listing=execFileSync('python3',['-c',"import zipfile; z=zipfile.ZipFile('downloads/Gym-iPhone.zip'); print('\\n'.join(z.namelist())); assert z.testzip() is None"],{encoding:'utf8'});
+ for(const expected of ['Gym/Gym.xcodeproj/project.pbxproj','Gym/Gym/Web/app.js','Gym/Gym/TrainingWebView.swift','Gym/GymActivity/GymActivity.swift','Gym/Shared/RestActivityAttributes.swift','Gym/README.md'])assert.ok(listing.includes(expected),expected);
+ assert.ok(!/node_modules|\.git\/|DerivedData|\.DS_Store/.test(listing));
+});
