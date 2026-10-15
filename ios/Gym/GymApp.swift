@@ -18,7 +18,7 @@ struct GymApp: App {
                 }
                 TrainingWebView(rest: rest)
             }
-            .background(Color(red: 16/255, green: 24/255, blue: 19/255))
+            .background(Color(red: 16.0/255, green: 24.0/255, blue: 19.0/255))
             .preferredColorScheme(.dark)
             .task { rest.restore() }
             .onChange(of: scenePhase) { _, phase in

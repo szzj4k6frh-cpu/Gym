@@ -17,7 +17,7 @@ struct TrainingWebView: UIViewRepresentable {
         view.navigationDelegate = context.coordinator
         view.uiDelegate = context.coordinator
         view.isOpaque = false
-        view.backgroundColor = UIColor(red: 16/255, green: 24/255, blue: 19/255, alpha: 1)
+        view.backgroundColor = UIColor(red: 16.0/255, green: 24.0/255, blue: 19.0/255, alpha: 1)
         view.scrollView.backgroundColor = view.backgroundColor
         if let url = Self.indexURL { view.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent()) }
         return view
@@ -31,6 +31,7 @@ struct TrainingWebView: UIViewRepresentable {
         view.uiDelegate = nil
     }
 
+    @MainActor
     final class Coordinator: NSObject, WKScriptMessageHandler, WKNavigationDelegate, WKUIDelegate {
         private let rest: RestCoordinator
         private let indexURL: URL?
