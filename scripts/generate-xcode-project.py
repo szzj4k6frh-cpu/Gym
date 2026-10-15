@@ -6,8 +6,8 @@ import json
 ROOT = Path(__file__).resolve().parents[1]
 objects = {}
 def ident(name): return uuid5(NAMESPACE_URL, 'gym-project:' + name).hex[:24].upper()
-def obj(name, kind, **values):
-    key = ident(name)
+def obj(key_name, kind, **values):
+    key = ident(key_name)
     objects[key] = dict(isa=kind, **values)
     return key
 
@@ -36,8 +36,8 @@ shared_group = obj('group:shared', 'PBXGroup', path='Shared', children=[shared],
 ext_group = obj('group:ext', 'PBXGroup', path='GymActivity', children=[widget, ext_plist], sourceTree='<group>')
 main_group = obj('group:main', 'PBXGroup', children=[app_group,core_group,shared_group,ext_group,products], sourceTree='<group>')
 
-def phase(name, kind, files, **extra):
-    return obj(name, kind, buildActionMask=2147483647, files=files, runOnlyForDeploymentPostprocessing=0, **extra)
+def phase(key_name, kind, files, **extra):
+    return obj(key_name, kind, buildActionMask=2147483647, files=files, runOnlyForDeploymentPostprocessing=0, **extra)
 
 app_sources = phase('app:sources', 'PBXSourcesBuildPhase', [build_file('app:'+name, ref) for name,ref in zip(app_swift+core_swift+['RestActivityAttributes.swift'],app_refs+core_refs+[shared])])
 ext_sources = phase('ext:sources', 'PBXSourcesBuildPhase', [build_file('ext:widget',widget),build_file('ext:shared',shared)])
