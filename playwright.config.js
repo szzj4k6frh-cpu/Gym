@@ -1,0 +1,3 @@
+import {existsSync} from 'node:fs';
+import {defineConfig} from '@playwright/test';
+export default defineConfig({testDir:'tests',testMatch:'*.spec.js',timeout:20000,use:{baseURL:'http://127.0.0.1:4173',viewport:{width:393,height:852},timezoneId:'Europe/Berlin'},projects:[{name:'chromium',use:{browserName:'chromium',launchOptions:existsSync('/usr/bin/chromium')?{executablePath:'/usr/bin/chromium'}:{}}},{name:'webkit',use:{browserName:'webkit'}}],webServer:[{command:'python3 -m http.server 4173 --bind 127.0.0.1',port:4173},{command:'python3 -m http.server 4174 --bind 127.0.0.1 --directory /workspace',port:4174}]});
