@@ -42,3 +42,14 @@ test('failed cache never claims offline readiness',async({page,context})=>{
  await expect.poll(()=>page.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration();return !r?.installing&&!r?.active})).toBe(true);
  await expect(page.locator('#offline')).not.toHaveText('Offline bereit');await expect(page.locator('#counter')).toHaveText('0 / 15');
 });
+test('late write failure preserves existing and new session checks',async({page})=>{
+ await page.goto('/');await page.getByRole('button',{name:/Kurzhantel-Schulterdrücken/}).click();
+ await page.evaluate(()=>{Storage.prototype.setItem=()=>{throw new Error('quota')}});
+ await page.getByRole('button',{name:/Seitheben/}).click();await expect(page.locator('#counter')).toHaveText('2 / 15');await expect(page.locator('#warning')).toBeVisible();
+ const persisted=await page.evaluate(()=>JSON.parse(localStorage.getItem('gym-training:v1')));expect(Object.keys(persisted.days['2026-10-12'].done)).toHaveLength(1);
+});
+test('explicit history selection after foreground midnight is preserved',async({page})=>{
+ await page.goto('/');await page.clock.setFixedTime(new Date('2026-10-13T00:01:00+02:00'));
+ await page.getByRole('button',{name:/Dienstag/}).click();await page.getByRole('button',{name:/Montag/}).click();
+ await page.evaluate(()=>document.dispatchEvent(new Event('visibilitychange')));await expect(page.locator('#selected-date')).toHaveText('12. Oktober');
+});

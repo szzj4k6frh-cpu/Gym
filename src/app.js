@@ -15,7 +15,7 @@ function render() {
  $('week-label').textContent=`${shortDate.format(week[0])} – ${shortDate.format(week[6])} ${week[6].getFullYear()}`;
  $('days').replaceChildren(...week.map(d=>{
   const key=dateKey(d),b=node('button','day'+(key===today?' is-today':''));b.id=`day-${key}`;b.setAttribute('aria-pressed',String(key===selected));b.setAttribute('aria-label',`${dayName.format(d)}, ${longDate.format(d)} ${d.getFullYear()}`);
-  b.append(node('span','',dayName.format(d).slice(0,2)),node('strong','',String(d.getDate())));b.onclick=()=>{selected=key;render()};return b;
+  b.append(node('span','',dayName.format(d).slice(0,2)),node('strong','',String(d.getDate())));b.onclick=()=>{selected=key;lastToday=dateKey(new Date());render()};return b;
  }));
  $('date-label').textContent=`${selected===today?'HEUTE · ':''}${dayName.format(date)} · ${date.getFullYear()}`;
  $('selected-date').textContent=longDate.format(date);
@@ -37,7 +37,7 @@ function render() {
  $('reset').hidden=!exercises.length;
  if(focus)document.getElementById(focus)?.focus({preventScroll:true});
 }
-for(const [id,offset] of [['previous',-7],['next',7]])$(id).onclick=()=>{selected=dateKey(addDays(parseDateKey(selected),offset));render()};
+for(const [id,offset] of [['previous',-7],['next',7]])$(id).onclick=()=>{selected=dateKey(addDays(parseDateKey(selected),offset));lastToday=dateKey(new Date());render()};
 $('today').onclick=()=>{selected=dateKey(new Date());lastToday=selected;render()};
 for(const variant of ['home','away'])$(variant).onclick=()=>{store.setVariant(selected,variant);render()};
 $('reset').onclick=()=>{if(confirm(`Alle Häkchen am ${longDate.format(parseDateKey(selected))} ${parseDateKey(selected).getFullYear()} zurücksetzen? Das gilt für Zuhause und Unterwegs.`)){store.resetDay(selected);render()}};
