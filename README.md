@@ -60,3 +60,9 @@ Häkchen, Satzwerte und Variante werden lokal pro Datum gespeichert. Vorhandene 
 Keine Synchronisierung und kein Backup. Beim Löschen der Website-Daten können Einträge verloren gehen. Safari und die installierte App können getrennte Speicher haben. Speicherfehler werden angezeigt; die App bleibt mit Häkchen für die aktuelle Sitzung bedienbar. Beschädigte Daten werden nicht still überschrieben.
 
 Bei einer Änderung an App-Dateien die Cache-Version in `sw.js` erhöhen. Ein neuer Worker wartet, bis bisherige App-Fenster geschlossen wurden, bevor er aktiv wird; danach startet die aktualisierte Fassung. Der Service Worker entfernt nur alte Caches mit dem eigenen Präfix `gym-app-`.
+
+## Native iPhone-Version
+
+Unter `ios/Gym.xcodeproj` liegt das Projekt für die lokale Installation aus Xcode. Das vollständige Paket ist [Gym-iPhone.zip](downloads/Gym-iPhone.zip); Schritte und Geräteprüfliste stehen in [ios/README.md](ios/README.md).
+
+Die bestehende Trainingsoberfläche ist lokal eingebettet. ActivityKit und lokale Benachrichtigungen ergänzen die Satzpause. Kein Server erforderlich. Swift-/Xcode-Build, Signierung und Sperrbildschirm-Verhalten müssen auf einem Mac und dem iPhone geprüft werden; die Cloud-Prüfungen allein bestätigen diese Funktionen nicht. Die native App hat einen eigenen Datenspeicher, getrennt von Safari.
