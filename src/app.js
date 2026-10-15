@@ -44,10 +44,5 @@ $('reset').onclick=()=>{if(confirm(`Alle Häkchen am ${longDate.format(parseDate
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){const now=dateKey(new Date());if(selected===lastToday)selected=now;lastToday=now;render()}});
 render();
 if('serviceWorker' in navigator) {
- navigator.serviceWorker.addEventListener('message',event=>{
-  if(event.data==='READY'&&event.source===navigator.serviceWorker.controller)$('offline').textContent='Offline bereit';
- });
- const check=()=>navigator.serviceWorker.controller?.postMessage('CHECK_READY');
- navigator.serviceWorker.addEventListener('controllerchange',check);
- navigator.serviceWorker.register(new URL('../sw.js',import.meta.url)).then(()=>navigator.serviceWorker.ready).then(check).catch(()=>{$('offline').textContent='Offline noch nicht verfügbar'});
-} else $('offline').textContent='Online nutzbar';
+ navigator.serviceWorker.register(new URL('../sw.js',import.meta.url)).catch(()=>{});
+}

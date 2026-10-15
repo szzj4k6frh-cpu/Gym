@@ -4,20 +4,17 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#101813"><meta name="description" content="Dein Trainingsplan. Zuhause und unterwegs. Auch offline.">
 <link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./icons/apple-touch-icon.png"><link rel="icon" href="./icons/icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes">
-<title>Gym · Dein Training</title><link rel="stylesheet" href="./styles.css">
+<title>Gym</title><link rel="stylesheet" href="./styles.css">
 </head>
 <body>
 <main>
-<header class="brand"><span class="brand-mark" aria-hidden="true">g.</span><span id="offline" role="status">Offline noch nicht bestätigt</span></header>
-<div class="intro"><h1>Dein Training<span>.</span></h1></div>
 <section class="calendar" aria-label="Trainingswoche"><div class="week-nav"><button id="previous" aria-label="Vorherige Woche">←</button><span id="week-label"></span><button id="next" aria-label="Nächste Woche">→</button><button id="today">Heute</button></div><div id="days" class="days"></div></section>
-<div class="day-heading"><div><p id="date-label" class="eyebrow"></p><h2 id="selected-date"></h2></div><span id="counter" aria-live="polite"></span></div>
-<div id="progress-wrap"><progress id="progress" max="1" value="0" aria-label="Tagesfortschritt"></progress></div>
+<div class="day-heading sr-only"><div><p id="date-label" class="eyebrow"></p><h2 id="selected-date"></h2></div><span id="counter" aria-live="polite"></span></div>
+<div id="progress-wrap" class="sr-only"><progress id="progress" max="1" value="0" aria-label="Tagesfortschritt"></progress></div>
 <div id="variants" class="variants" role="group" aria-label="Trainingsort"><button id="home" aria-pressed="true">Zuhause</button><button id="away" aria-pressed="false">Unterwegs</button></div>
 <p id="warning" class="warning" role="alert" hidden></p>
 <div id="content"></div>
 <button id="reset" class="reset">Tag zurücksetzen</button>
-<footer><details><summary>Installation & Speicherung <span aria-hidden="true">＋</span></summary><p>Auf dem iPhone: In Safari öffnen → Teilen → Zum Home-Bildschirm. Nach „Offline bereit“ funktioniert dein Plan auch ohne Internet.</p><p>Deine Häkchen werden nur auf diesem Gerät gespeichert. Keine Anmeldung, keine Cloud. Wenn du Website-Daten löschst oder das Gerät wechselst, können sie verloren gehen. Safari und die installierte App können getrennte Speicher haben.</p></details></footer>
 </main>
 <script type="module" src="./src/app.js"></script>
 </body></html>

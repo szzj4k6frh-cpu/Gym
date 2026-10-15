@@ -39,9 +39,9 @@ Nach Übernahme der App in das GitHub-Repository: Settings → Pages → Deploy 
 
 Auf dem iPhone 16:
 
-1. Die veröffentlichte Adresse in Safari öffnen und „Offline bereit“ abwarten.
+1. Die veröffentlichte Adresse in Safari öffnen und den Plan vollständig laden lassen.
 2. Teilen → Zum Home-Bildschirm → gegebenenfalls „Als Web-App öffnen“ aktivieren → Hinzufügen.
-3. App vom Home-Bildschirm starten, nochmals „Offline bereit“ abwarten.
+3. App vom Home-Bildschirm starten und den Plan einmal mit Internetverbindung vollständig laden lassen.
 4. Eine Übung abhaken, App schließen und erneut öffnen: Häkchen muss bleiben.
 5. Flugmodus aktivieren, App erneut starten und beide Trainingsvarianten prüfen.
 

@@ -1,4 +1,8 @@
 import {test,expect} from '@playwright/test';
+async function waitForOffline(page) {
+ await page.evaluate(()=>navigator.serviceWorker.ready);
+ await page.waitForFunction(()=>navigator.serviceWorker.controller!==null);
+}
 test.beforeEach(async({page})=>{await page.clock.install({time:new Date('2026-10-12T12:00:00+02:00')});});
 test('training variants, persistence, history and reset',async({page})=>{
  await page.goto('/');await expect(page.locator('#counter')).toHaveText('0 / 15');
@@ -29,10 +33,10 @@ test('today follows midnight while history stays selected',async({page})=>{
  await page.getByRole('button',{name:'Heute',exact:true}).click();await expect(page.locator('#selected-date')).toContainText('14. Oktober');
 });
 for(const url of ['http://127.0.0.1:4173/','http://127.0.0.1:4174/Gym/'])test(`offline install and reload at ${url}`,async({page,context})=>{
- await page.goto(url);await expect(page.locator('#offline')).toHaveText('Offline bereit');
+ await page.goto(url);await waitForOffline(page);
  const manifest=await page.evaluate(async()=>await(await fetch(document.querySelector('link[rel=manifest]').href)).json());expect(manifest.display).toBe('standalone');expect(manifest.lang).toBe('de');
  for(const icon of manifest.icons){const response=await page.request.get(new URL(icon.src,url).href);expect(response.ok()).toBe(true)}
- await page.getByRole('button',{name:/Kurzhantel-Schulterdrücken/}).click();await context.setOffline(true);await page.reload();await expect(page.locator('#counter')).toHaveText('1 / 15');await expect(page.locator('#offline')).toHaveText('Offline bereit');
+ await page.getByRole('button',{name:/Kurzhantel-Schulterdrücken/}).click();await context.setOffline(true);await page.reload();await expect(page.locator('#counter')).toHaveText('1 / 15');await waitForOffline(page);
  await page.getByRole('button',{name:'Unterwegs',exact:true}).click();await page.getByRole('button',{name:/Pike Push-ups/}).click();await page.reload();await expect(page.locator('#counter')).toHaveText('1 / 14');
 });
 test('failed cache never claims offline readiness',async({page,context})=>{
@@ -40,7 +44,7 @@ test('failed cache never claims offline readiness',async({page,context})=>{
  await page.goto('http://127.0.0.1:4175/');
  expect((await missing).status()).toBe(404);
  await expect.poll(()=>page.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration();return !r?.installing&&!r?.active})).toBe(true);
- await expect(page.locator('#offline')).not.toHaveText('Offline bereit');await expect(page.locator('#counter')).toHaveText('0 / 15');
+ expect(await page.evaluate(()=>navigator.serviceWorker.controller)).toBeNull();await expect(page.locator('#counter')).toHaveText('0 / 15');
 });
 test('late write failure preserves existing and new session checks',async({page})=>{
  await page.goto('/');await page.getByRole('button',{name:/Kurzhantel-Schulterdrücken/}).click();
